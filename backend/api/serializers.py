@@ -27,7 +27,7 @@ class UserSerializer(serializers.ModelSerializer):
     def create(self, validated_data):
         user = User.objects.create_user(**validated_data)
         return user
-    
+        
 class NoteSerializer(serializers.ModelSerializer):
     class Meta:
         model = Note
@@ -60,8 +60,26 @@ class ChangePasswordSerializer(serializers.Serializer):
             })
         
         validate_password(new_password, user = user)
-
         return attrs
+
+class ChangeUsernameSerializer(serializers.Serializer):
+    new_username = serializers.CharField(write_only = True)
+
+    def validate(self, attrs):
+        user = self.context["request"].user
+        new_username = attrs.get("new_username")
+
+        if new_username == user.username:
+            raise serializers.ValidatinError({
+                "username": "New username is the same as the old one."
+            })
+        return attrs
+
+
+        
+        
+    
+
 
 
 
