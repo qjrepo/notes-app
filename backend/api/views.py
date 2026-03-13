@@ -87,7 +87,8 @@ class UpdateUsername(views.APIView):
 
         if serializer.is_valid():
             user = request.user
-            new_username = serializer.validated_data("new_username")
+            new_username = serializer.validated_data["new_username"]
+            print(new_username)
             user.username = new_username
             user.save()
 

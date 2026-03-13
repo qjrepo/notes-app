@@ -70,7 +70,7 @@ class ChangeUsernameSerializer(serializers.Serializer):
         new_username = attrs.get("new_username")
 
         if new_username == user.username:
-            raise serializers.ValidatinError({
+            raise serializers.ValidationError({
                 "username": "New username is the same as the old one."
             })
         return attrs

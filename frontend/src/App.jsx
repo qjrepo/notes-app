@@ -7,7 +7,7 @@ import NotFound from './pages/NotFound'
 import ProtectedRoute from './components/ProtectedRoute'
 import AuthProvider from "./components/AuthContext";
 import ChangePassword from "./pages/ChangePassword";
-
+import UpdateUsername from "./pages/UpdateUsername";
 
 function App() {
   return (
@@ -27,6 +27,14 @@ function App() {
             element={
               <ProtectedRoute>
                 <ChangePassword />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/updateusername"
+            element={
+              <ProtectedRoute>
+                <UpdateUsername />
               </ProtectedRoute>
             }
           />
