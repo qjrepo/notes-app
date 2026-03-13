@@ -11,7 +11,6 @@ function Home(){
     const [title, setTitle] = useState("");
     const {logout, user} = useContext(AuthContext);
 
-
     // const username = localStorage.getItem(USER)
 
     useEffect(()=>{
@@ -68,8 +67,12 @@ function Home(){
     };
 
     const changePassword = () => {
-        navigate("/changePassword");
+        navigate("/changepassword");
     }
+    const updateUsername = () => {
+        navigate("/updateusername");
+    }
+
     return(
         <div>
             <h2>Hello {user}</h2>
@@ -104,6 +107,7 @@ function Home(){
                 </form>
                 <button onClick={handleLogout}>Logout</button>
                 <button onClick = {changePassword}>Change Password</button>
+                <button onClick = {updateUsername}> Update Username</button>
             </div>
         </div>
     )

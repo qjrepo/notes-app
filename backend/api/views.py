@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.contrib.auth.models import User
 from rest_framework import generics, views, status
-from .serializers import UserSerializer, NoteSerializer, CustomTokenObtainPairSerializer, ChangePasswordSerializer
+from .serializers import UserSerializer, NoteSerializer, CustomTokenObtainPairSerializer, ChangePasswordSerializer, ChangeUsernameSerializer
 from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework.response import Response
 from .models import Note
@@ -74,8 +74,34 @@ class UpdatePassword(views.APIView):
         return Response(
             {"details":serializer.errors },
             status = status.HTTP_400_BAD_REQUEST
-            
+        )
+    
+class UpdateUsername(views.APIView):
+    permission_classes = [IsAuthenticated]
+
+    def post(self, request):
+        serializer = ChangeUsernameSerializer(
+            data = request.data,
+            context = {"request": request}
+        )
+
+        if serializer.is_valid():
+            user = request.user
+            new_username = serializer.validated_data["new_username"]
+            print(new_username)
+            user.username = new_username
+            user.save()
+
+            return Response(
+                {"detail": "Username changed successfully"},
+                status = status.HTTP_200_OK
             )
+        return Response(
+            {"details": serializer.errors},
+            status = status.HTTP_400_BAD_REQUEST
+        )
+    
+            
 
 
 
