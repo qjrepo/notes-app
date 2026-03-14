@@ -8,6 +8,8 @@ import ProtectedRoute from './components/ProtectedRoute'
 import AuthProvider from "./components/AuthContext";
 import ChangePassword from "./pages/ChangePassword";
 import UpdateUsername from "./pages/UpdateUsername";
+import ForgetPassword from "./pages/ForgetPassword";
+import ResetPassword from "./pages/ResetPassword";
 
 function App() {
   return (
@@ -41,8 +43,11 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="*" element={<NotFound />} />
-          
-
+          <Route path = "/forgetpassword" element = {<ForgetPassword/>}/>
+          <Route
+            path="/reset-password/:uid/:token" element={<ResetPassword />}
+          />
+        
         </Routes>
       </BrowserRouter>
     </AuthProvider>
