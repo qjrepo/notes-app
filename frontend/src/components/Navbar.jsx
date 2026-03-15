@@ -19,14 +19,12 @@ function Navbar(){
                 setOpen(false);
             }
         }
-
         document.addEventListener("mousedown", handleClickOutside);
 
         return () => {
             document.removeEventListener("mousedown", handleClickOutside);
         };
     }, []);
-
 
 
     const handleLogout = () => {
@@ -68,5 +66,4 @@ function Navbar(){
         </nav>
     )
 }
-
 export default Navbar;
