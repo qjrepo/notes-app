@@ -9,7 +9,7 @@ function Home(){
     const [notes, setNotes] = useState([]);
     const [content, setContent] = useState("");
     const [title, setTitle] = useState("");
-    const {logout, user} = useContext(AuthContext);
+    const {logout} = useContext(AuthContext);
 
     // const username = localStorage.getItem(USER)
 
@@ -78,7 +78,7 @@ function Home(){
 
     return(
         <div>
-            {/* <h2>Hello <span onClick = {() => navigate("/userprofile")}> {user}</span></h2> */}
+            {/* <h2>Hello <span onClick = {() => navigate("/userprofile")}> {user.username}</span></h2> */}
             <div className = "notes-section">
                 <h1>Notes</h1>
                 {notes.map((note) => <Note note = {note} deleteNote = {deleteNote} updateNote = {updateNote} key = {note.id}></Note>)}

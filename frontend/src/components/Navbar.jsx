@@ -9,6 +9,7 @@ function Navbar(){
     const [open, setOpen] = useState(false)
     const navigate = useNavigate()
     const dropdownRef = useRef(null);
+    // console.log("USER FROM CONTEXT:", user);
 
     useEffect(() => {
         function handleClickOutside(event) {
@@ -41,14 +42,14 @@ function Navbar(){
                     className="username"
                     onClick={() => setOpen(!open)}
                 >
-                    {user}
+                    {user.username}
                 </span>
 
                 {open && (
                     <div className="dropdown">
-                        {/* <div onClick={() => navigate("/userprofile")}>
+                        <div onClick={() => navigate("/userprofile")}>
                             Profile
-                        </div> */}
+                        </div>
                         <div onClick={() => navigate("/updateusername")}>
                             Change Username
                         </div>

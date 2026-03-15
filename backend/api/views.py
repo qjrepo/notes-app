@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.contrib.auth.models import User
 from rest_framework import generics, views, status
-from .serializers import UserSerializer, NoteSerializer, CustomTokenObtainPairSerializer, ChangePasswordSerializer, ChangeUsernameSerializer,ForgotPasswordSerializer, ForgotPasswordConfirmSerializer
+from .serializers import UserSerializer, NoteSerializer, CustomTokenObtainPairSerializer, ChangePasswordSerializer, ChangeUsernameSerializer,ForgotPasswordSerializer, ForgotPasswordConfirmSerializer, ChangeUserEmailSerializer
 from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework.response import Response
 from .models import Note
@@ -106,6 +106,31 @@ class UpdateUsername(views.APIView):
             {"details": serializer.errors},
             status = status.HTTP_400_BAD_REQUEST
         )
+
+class UpdateUserEmail(views.APIView):
+    permission_classes = [IsAuthenticated]
+
+    def post(self, request):
+        serializer = ChangeUserEmailSerializer(
+            data = request.data,
+            context = {"request": request}
+        )
+
+        if serializer.is_valid():
+            user = request.user
+            new_email = serializer.validated_data["new_email"]
+            print(new_email)
+            user.email = new_email
+            user.save()
+
+            return Response(
+                {"detail": "Email changed successfully"},
+                status = status.HTTP_200_OK
+            )
+        return Response(
+            {"details": serializer.errors},
+            status = status.HTTP_400_BAD_REQUEST
+        )
     
 class ForgotPasswordView(views.APIView):
     permission_classes = []
@@ -182,7 +207,7 @@ class ForgotPasswordConfirmView(views.APIView):
         return Response(
                 {"message": "Password reset successfully"},
                 status=status.HTTP_200_OK
-            )
+        )
 
 
 

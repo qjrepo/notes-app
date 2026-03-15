@@ -10,6 +10,7 @@ class CustomTokenObtainPairSerializer(TokenObtainPairSerializer):
         # Add extra fields to response
         data["username"] = self.user.username
         data["user_id"] = self.user.id
+        data["email"] = self.user.email
         return data
 
 class UserSerializer(serializers.ModelSerializer):
@@ -105,6 +106,19 @@ class ChangeUsernameSerializer(serializers.Serializer):
                 "username": "New username is the same as the old one."
             })
         return attrs
+
+class ChangeUserEmailSerializer(serializers.Serializer):
+    new_email = serializers.CharField(write_only = True)
+
+    def validate(self, attrs):
+        user = self.context["request"].user
+        new_email = attrs.get("new_email")
+        if new_email == user.email:
+            raise serializers.ValidationError({
+                "email": "New email is the same as the old one."
+            })
+        return attrs
+
 
 
 

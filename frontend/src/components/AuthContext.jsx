@@ -1,7 +1,7 @@
 import {Navigate} from 'react-router-dom';
 import {jwtDecode} from "jwt-decode";
 import api from '../api';
-import { ACCESS_TOKEN, REFRESH_TOKEN, USER} from  '../constants';
+import { ACCESS_TOKEN, REFRESH_TOKEN, USER, USER_ID} from  '../constants';
 import {useState, useEffect, createContext } from 'react';
 
 export const AuthContext = createContext();
@@ -9,6 +9,7 @@ export const AuthContext = createContext();
 function AuthProvider({children}){
     const [isAuthorized, setIsAuthorized] = useState(null);
     const [user, setUser] = useState(null);
+    const [userEmail, setUserEmail] = useState(null);
     
     useEffect(() => {
         auth().catch((error) => {
@@ -57,11 +58,23 @@ function AuthProvider({children}){
     };
 
     const login = (data) => {
+        const userData = {
+            username: data.username,
+            email: data.email,
+            user_id: data.user_id,
+        };
+
+
+
         localStorage.setItem(ACCESS_TOKEN, data.access);
         localStorage.setItem(REFRESH_TOKEN, data.refresh);
-        localStorage.setItem(USER, data.username);
+        // localStorage.setItem(USER, data.username);
+        localStorage.setItem(USER, JSON.stringify(userData));
+        // localStorage.setItem(USER_ID, data.user_id);
 
-        setUser(data.username);
+        // setUser(data.username);
+        setUser(userData);
+        // setUserEmail(data.email);
         setIsAuthorized(true);
   };
 
@@ -69,6 +82,7 @@ function AuthProvider({children}){
     localStorage.removeItem(ACCESS_TOKEN);
     localStorage.removeItem(REFRESH_TOKEN);
     localStorage.removeItem(USER);
+    // localStorage.removeItem(USER_ID)
 
     setUser(null);
     setIsAuthorized(false);
@@ -76,7 +90,7 @@ function AuthProvider({children}){
 
   return (
     <AuthContext.Provider
-      value={{ user, isAuthorized, login, logout }}
+      value={{ user, userEmail, isAuthorized, login, logout }}
     >
       {children}
     </AuthContext.Provider>
