@@ -66,7 +66,6 @@ class ForgotPasswordConfirmSerializer(serializers.Serializer):
         validate_password(new_password)
         return attrs
 
-        
 class ChangePasswordSerializer(serializers.Serializer):
     current_password = serializers.CharField(write_only = True)
     new_password = serializers.CharField(write_only = True)

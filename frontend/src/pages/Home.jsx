@@ -58,6 +58,9 @@ function Home(){
                 getNotes();
             })
             .catch((err) => alert(err));
+        setTitle("")
+        setContent("")
+        
     };
 
     const handleLogout = () => {
@@ -75,7 +78,7 @@ function Home(){
 
     return(
         <div>
-            <h2>Hello {user}</h2>
+            {/* <h2>Hello <span onClick = {() => navigate("/userprofile")}> {user}</span></h2> */}
             <div className = "notes-section">
                 <h1>Notes</h1>
                 {notes.map((note) => <Note note = {note} deleteNote = {deleteNote} updateNote = {updateNote} key = {note.id}></Note>)}
@@ -105,9 +108,9 @@ function Home(){
                     <br />
                     <input type = "submit" value = "Submit"></input>
                 </form>
-                <button onClick={handleLogout}>Logout</button>
+                {/* <button onClick={handleLogout}>Logout</button>
                 <button onClick = {changePassword}>Change Password</button>
-                <button onClick = {updateUsername}> Update Username</button>
+                <button onClick = {updateUsername}> Update Username</button> */}
             </div>
         </div>
     )
