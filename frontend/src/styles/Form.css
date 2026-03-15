@@ -20,9 +20,9 @@
 }
 
 .form-button {
-  width: 95%;
+  width: 90%;
   padding: 10px;
-  margin: 20px 0;
+  margin: 10px 0;
   background-color: #007bff;
   color: white;
   border: none;
@@ -33,4 +33,14 @@
 
 .form-button:hover {
   background-color: #0056b3;
+}
+
+.button-row {
+  display: flex;
+  gap: 12px;        /* space between buttons */
+  width: 90%;
+}
+
+.button-row .form-button {
+  flex: 1;          /* makes both buttons equal width */
 }

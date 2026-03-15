@@ -73,11 +73,20 @@ function Form({route, method}){
                 <button type = "submit" className = "form-button">
                     {name}
                 </button>
+                {isRegister && (
+                    <button type ="button" className = "form-button" onClick = {() => navigate("/login")}> Login</button>
+                )}
 
                 {!isRegister && (
-                    <button className = "form-button" onClick = {handleForgetPassword}>
-                    Forgot Password?
-                 </button>
+                    <div className="button-row">
+                        <button type = "button" className = "form-button" onClick = {handleForgetPassword}>
+                            Forgot Password?
+                        </button>
+                        <button type = "button" className = "form-button" onClick = {() => navigate("/register")}>
+                            Sign up
+                        </button>
+                    </div>
+                 
                 )}
             </form>
         </>

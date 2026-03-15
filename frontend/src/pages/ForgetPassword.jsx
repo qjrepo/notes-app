@@ -1,5 +1,6 @@
 import {useState} from 'react';
 import api from "../api";
+import "../styles/Form.css"
 
 
 function ForgetPassword(){
@@ -22,16 +23,16 @@ function ForgetPassword(){
 
     return(
 
-        <form onSubmit = {handleSubmit}>
+        <form className = "form-container" onSubmit = {handleSubmit}>
             <label htmlFor = "email">Plase enter your email address</label>
             <input
-                className = "email-input"
+                className = "form-input"
                 id = "email"
                 value = {email}
                 onChange = {(e) => setEmail(e.target.value)}
                 required
             ></input>
-            <input type = "submit" value = "Send Link"></input>
+            <input className = "form-button" type = "submit" value = "Send Link"></input>
         </form>
     )
 
