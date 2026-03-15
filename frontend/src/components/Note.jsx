@@ -42,11 +42,9 @@ function Note({note, deleteNote, updateNote}){
             alert("Update failed")
         }
     }
-
     const handleCancel = () => {
         setIsEditing(false)
     }
-
     return (
         <div className = "note-container" onDoubleClick = {handleDoubleclick}>
             {isEditing ? (

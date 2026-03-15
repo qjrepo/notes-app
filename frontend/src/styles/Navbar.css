@@ -1,0 +1,38 @@
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 25px;
+
+  background-color: #92aad1;   /* dark blue-gray */
+  color: rgb(7, 1, 1);
+}
+
+
+.username-wrapper {
+  position: relative;
+  display: inline-block;
+}
+
+.username {
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.dropdown {
+  position: absolute;
+  top: 25px;
+  left: 0;  /* aligns under username only */
+  background: rgb(201, 185, 213);
+  /* border: 1px solid #ccc; */
+  width: 200px;
+}
+
+.dropdown div {
+  padding: 8px;
+  cursor: pointer;
+}
+
+.dropdown div:hover {
+  background: #e4ccf1;
+}
