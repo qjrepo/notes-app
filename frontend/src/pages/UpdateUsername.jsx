@@ -29,7 +29,7 @@ function UpdateUsername(){
         <div className = "uu-container">
             <form className = "uu-form" onSubmit={update_new_username}>
                 <label htmlFor = "current-username"> Current username:</label>
-                <input id = "current-username" value = {user} disabled/>
+                <input id = "current-username" value = {user.username} disabled/>
                 <label htmlFor = "new-username">New username:</label>
                 <input 
                     id = "new-username" 
