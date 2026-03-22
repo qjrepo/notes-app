@@ -52,8 +52,12 @@ function AuthProvider({children}){
         }else {
             setIsAuthorized(true);
         }
-         if (storedUsername) {
-            setUser(storedUsername);
+        if (storedUsername) {
+            try {
+                setUser(JSON.parse(storedUsername));
+            } catch {
+                setUser(storedUsername);
+            }
         }
     };
 
