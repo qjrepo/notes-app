@@ -192,13 +192,18 @@ function AddJobModal({ onClose, onCreated }) {
                 </div>
             )}
             {step === 'form' && (
-                <JobForm
-                    form={form}
-                    onChange={setField}
-                    onSubmit={handleSave}
-                    submitLabel="Create Job"
-                    loading={saving}
-                />
+                <>
+                    <button className="jt-btn jt-btn-ghost" onClick={() => setStep('input')}>
+                        ✨ Extract with AI instead
+                    </button>
+                    <JobForm
+                        form={form}
+                        onChange={setField}
+                        onSubmit={handleSave}
+                        submitLabel="Create Job"
+                        loading={saving}
+                    />
+                </>
             )}
         </Modal>
     );
