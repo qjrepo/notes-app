@@ -1,82 +1,183 @@
-/* Container for the whole page */
-div {
-  font-family: Arial, sans-serif;
+.notes-page {
+  min-height: 100vh;
+  background: #f5f4fa;
+  padding: 40px 40px 80px;
+  font-family: inherit;
 }
 
-/* Styles for the notes section */
+.notes-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  gap: 32px;
+  align-items: flex-start;
+}
+
+/* ── Section headings ── */
+.notes-section-title {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #2d1f4e;
+  margin: 0 0 16px;
+  letter-spacing: 0.01em;
+}
+
+.notes-count {
+  font-weight: 400;
+  color: #999;
+  font-size: 0.9rem;
+}
+
+.notes-empty {
+  color: #aaa;
+  font-size: 0.88rem;
+  text-align: center;
+  padding: 32px 0;
+}
+
+/* ── Notes list ── */
 .notes-section {
-  margin-bottom: 2rem;
-  max-width: 600px;   /* controls width of the column */
-  margin: 0 auto; 
+  flex: 1 1 0;
+  min-width: 0;
 }
 
-.notes-section h2 {
-  color: #333;
-  font-size: 24px;
+/* ── Pagination ── */
+.notes-pagination {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  margin-top: 16px;
 }
 
-/* Styles for individual notes - assuming your Note component has some container element */
-.note {
-  background-color: #f9f9f9;
-  border-left: 5px solid #007bff;
-  margin: 10px 0;
-  padding: 10px 15px;
-  border-radius: 5px;
+.notes-pg-btn {
+  background: #fff;
+  color: #5b3d8a;
+  border: 1px solid #d4c8f0;
+  border-radius: 8px;
+  padding: 6px 14px;
+  font-size: 0.82rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.15s;
 }
 
+.notes-pg-btn:hover:not(:disabled) { background: #f3eef8; }
+.notes-pg-btn:disabled { opacity: 0.4; cursor: default; }
+
+.notes-pg-info {
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: #5b3d8a;
+  min-width: 90px;
+  text-align: center;
+}
+
+/* ── Create form card ── */
 .create-note-section {
-  max-width: 600px;
-  margin: 0 auto;   /* centers entire section */
+  flex: 0 0 340px;
+  background: #fff;
+  border-radius: 16px;
+  padding: 24px;
+  box-shadow: 0 4px 20px rgba(45,31,78,0.08);
+  border: 1px solid #ede9f5;
+  position: sticky;
+  top: 24px;
 }
 
 .create-note-section h2 {
-  margin-bottom: 1rem;
+  font-size: 1rem;
+  font-weight: 700;
+  color: #2d1f4e;
+  margin: 0 0 20px;
 }
 
-/* Styles for the form section */
-form {
-  background-color: #fff;
-  padding: 20px;
+.create-note-form label {
+  display: block;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #5b3d8a;
+  margin-bottom: 5px;
+}
+
+.create-note-form input[type="text"],
+.create-note-form textarea {
+  width: 100%;
+  padding: 9px 12px;
+  margin-bottom: 14px;
+  border: 1px solid #e0e0e0;
   border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  /* max-width: 500px; */
-  margin: auto;
-  width: 100%;
+  font-size: 0.9rem;
+  font-family: inherit;
   box-sizing: border-box;
+  outline: none;
+  transition: border-color 0.15s;
+  resize: vertical;
 }
 
-form h2 {
-  color: #333;
-  font-size: 24px;
-  margin-bottom: 20px;
-
+.create-note-form input[type="text"]:focus,
+.create-note-form textarea:focus {
+  border-color: #7c5cbf;
 }
 
-form label {
-  font-weight: bold;
-  margin-top: 10px;
-}
-
-form input,
-form textarea {
-  width: 100%;
-  padding: 8px;
-  margin: 8px 0 16px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  box-sizing: border-box;
-}
-
-form input[type="submit"] {
-  background-color: #007bff;
-  color: white;
-  padding: 10px 20px;
+.create-note-form input[type="submit"] {
+  background: #7c5cbf;
+  color: #fff;
+  padding: 9px 24px;
   border: none;
-  border-radius: 4px;
+  border-radius: 8px;
   cursor: pointer;
-  font-size: 16px;
+  font-size: 0.88rem;
+  font-weight: 600;
+  transition: background 0.15s;
 }
 
-form input[type="submit"]:hover {
-  background-color: #0056b3;
+.create-note-form input[type="submit"]:hover {
+  background: #5b3d8a;
 }
+
+/* ── Toast notifications ── */
+.toast-container {
+  position: fixed;
+  top: 72px;
+  right: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  z-index: 9999;
+}
+
+.toast {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 12px 16px;
+  border-radius: 10px;
+  font-size: 0.88rem;
+  font-weight: 500;
+  min-width: 260px;
+  max-width: 360px;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.12);
+  animation: toast-in 0.2s ease-out;
+}
+
+@keyframes toast-in {
+  from { opacity: 0; transform: translateX(20px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
+.toast-success { background: #2d1f4e; color: #fff; }
+.toast-error   { background: #d32f2f; color: #fff; }
+
+.toast-close {
+  background: none;
+  border: none;
+  color: rgba(255,255,255,0.7);
+  cursor: pointer;
+  font-size: 0.85rem;
+  padding: 0;
+  flex-shrink: 0;
+}
+
+.toast-close:hover { color: #fff; }

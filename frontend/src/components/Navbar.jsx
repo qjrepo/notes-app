@@ -36,33 +36,42 @@ function Navbar(){
     return(
         <nav className="navbar">
             <div className="user-section" ref={dropdownRef}>
-                Hello{" "}
-                <div className="username-wrapper">
-                    <span
-                    className="username"
-                    onClick={() => setOpen(!open)}
-                >
-                    {user.username}
-                </span>
+                <button className="avatar-btn" onClick={() => setOpen(!open)}>
+                    <span className="avatar-circle">{user.username?.[0]?.toUpperCase()}</span>
+                    <span className="avatar-name">Hello, {user.username}</span>
+                    <span className="avatar-caret">{open ? '▴' : '▾'}</span>
+                </button>
 
                 {open && (
                     <div className="dropdown">
-                        <div onClick={() => navigate("/userprofile")}>
-                            Profile
+                        <div className="dropdown-header">
+                            <span className="dropdown-avatar">{user.username?.[0]?.toUpperCase()}</span>
+                            <div>
+                                <p className="dropdown-username">{user.username}</p>
+                                <p className="dropdown-email">{user.email}</p>
+                            </div>
                         </div>
-                        <div onClick={() => navigate("/updateusername")}>
-                            Change Username
+                        <div className="dropdown-divider" />
+                        <div className="dropdown-item" onClick={() => { navigate("/userprofile"); setOpen(false); }}>
+                            <span className="dropdown-icon">👤</span> Profile
                         </div>
-                        <div onClick={() => navigate("/changepassword")}>
-                            Change Password
+                        <div className="dropdown-item" onClick={() => { navigate("/updateusername"); setOpen(false); }}>
+                            <span className="dropdown-icon">✏️</span> Change Username
                         </div>
-                        <div onClick={handleLogout}>
-                            Logout
+                        <div className="dropdown-item" onClick={() => { navigate("/changepassword"); setOpen(false); }}>
+                            <span className="dropdown-icon">🔒</span> Change Password
+                        </div>
+                        <div className="dropdown-divider" />
+                        <div className="dropdown-item dropdown-item-danger" onClick={handleLogout}>
+                            <span className="dropdown-icon">🚪</span> Logout
                         </div>
                     </div>
                 )}
-                </div>
-                
+            </div>
+
+            <div className="nav-links">
+                <span className="nav-link" onClick={() => navigate("/")}>Notes</span>
+                <span className="nav-link" onClick={() => navigate("/jobs")}>Job Tracker</span>
             </div>
         </nav>
     )

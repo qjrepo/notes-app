@@ -14,6 +14,7 @@ import Navbar from "./components/Navbar";
 // import Navbar from 'react-bootstrap/Navbar';
 import UserProfile from "./pages/UserProfile";
 import ProtectedLayout from "./components/ProtectedLayout";
+import JobTracker from "./pages/JobTracker";
 
 function App() {
   return (
@@ -61,6 +62,7 @@ function App() {
                   }
             >
                 <Route path="/" element={<Home />} />
+                <Route path="/jobs" element={<JobTracker />} />
                 <Route path="/changepassword" element={<ChangePassword />} />
                 <Route path="/updateusername" element={<UpdateUsername />} />
                 <Route path="/userprofile" element={<UserProfile />} />

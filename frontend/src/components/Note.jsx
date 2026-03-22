@@ -48,7 +48,7 @@ function Note({note, deleteNote, updateNote}){
     return (
         <div className = "note-container" onDoubleClick = {handleDoubleclick}>
             {isEditing ? (
-                <form onSubmit = {handleUpdate}>
+                <form className="note-edit-form" onSubmit={handleUpdate}>
                     <input 
                         type = "text"
                         id = "editedTitle"
@@ -61,8 +61,10 @@ function Note({note, deleteNote, updateNote}){
                         onChange = {(e) => setEditedContent(e.target.value)}
                         value = {editedContent}
                     />
-                    <button className="update-button" type = "submit">Update</button>
-                    <button className="cancel-button" onClick = {handleCancel}>Cancel</button>
+                    <div className="note-actions">
+                        <button className="update-button" type="submit">Update</button>
+                        <button className="cancel-button" type="button" onClick={handleCancel}>Cancel</button>
+                    </div>
                </form>
             ) : (
                 <article>
@@ -84,12 +86,9 @@ function Note({note, deleteNote, updateNote}){
                         </p>
                     )}
 
-                    <button
-                        className="delete-button"
-                        onClick={() => deleteNote(note.id)}
-                    >
-                        Delete
-                    </button>
+                    <div className="note-actions">
+                        <button className="delete-button" onClick={() => deleteNote(note.id)}>Delete</button>
+                    </div>
                 </article>
             )
         }

@@ -1,64 +1,119 @@
 .note-container {
-  padding: 10px;
-  margin: 20px 0;
-  border: 1px solid #ccc;
-  border-radius: 5px;
+  background: #fff;
+  border: 1px solid #ede9f5;
+  border-radius: 14px;
+  padding: 18px 20px;
+  margin-bottom: 14px;
+  box-shadow: 0 2px 10px rgba(45,31,78,0.06);
+  transition: box-shadow 0.15s ease;
+  cursor: default;
+}
+
+.note-container:hover {
+  box-shadow: 0 4px 18px rgba(45,31,78,0.11);
 }
 
 .note-title {
-  color: #333;
+  font-size: 1rem;
+  font-weight: 700;
+  color: #2d1f4e;
+  margin: 0 0 6px;
 }
 
 .note-content {
-  color: #666;
+  font-size: 0.9rem;
+  color: #555;
+  line-height: 1.55;
+  margin: 0 0 12px;
+  white-space: pre-wrap;
 }
 
 .note-date {
-  color: #999;
-  font-size: 0.8rem;
+  font-size: 0.75rem;
+  color: #aaa;
+  margin: 0 0 2px;
+}
+
+/* ── Inline edit form ── */
+.note-edit-form {
+  background: none;
+  padding: 0;
+  box-shadow: none;
+  border-radius: 0;
+  margin: 0;
+  width: 100%;
+}
+
+.note-edit-form input[type="text"],
+.note-edit-form textarea {
+  width: 100%;
+  padding: 7px 10px;
+  margin-bottom: 10px;
+  border: 1px solid #d4c8f0;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  font-family: inherit;
+  box-sizing: border-box;
+  outline: none;
+  transition: border-color 0.15s;
+  resize: vertical;
+  background: #faf8ff;
+}
+
+.note-edit-form input[type="text"]:focus,
+.note-edit-form textarea:focus {
+  border-color: #7c5cbf;
+  background: #fff;
+}
+
+/* ── Actions ── */
+.note-actions {
+  display: flex;
+  gap: 8px;
+  margin-top: 12px;
 }
 
 .delete-button {
-  background-color: #f44336; /* Red */
-  color: white;
-  border: none;
-  padding: 10px 20px;
-  border-radius: 5px;
+  background: #fff;
+  color: #d32f2f;
+  border: 1px solid #f5c2c2;
+  padding: 6px 14px;
+  border-radius: 8px;
+  font-size: 0.8rem;
+  font-weight: 600;
   cursor: pointer;
-  transition: background-color 0.3s;
+  transition: background 0.15s;
 }
 
-.delete-button:hover {
-  background-color: #d32f2f; /* Darker red */
-}
+.delete-button:hover { background: #fff5f5; }
 
 .update-button {
-  background-color: rgb(111, 111, 216);
-  color: white;
+  background: #7c5cbf;
+  color: #fff;
   border: none;
-  padding: 10px 20px;
-  border-radius: 5px;
+  padding: 6px 14px;
+  border-radius: 8px;
+  font-size: 0.8rem;
+  font-weight: 600;
   cursor: pointer;
-  transition: background-color 0.3s;
+  transition: background 0.15s;
 }
 
-.update-button:hover {
-  background-color: rgb(161, 161, 221); 
-}
+.update-button:hover { background: #5b3d8a; }
 
 .cancel-button {
-  background-color: rgb(62, 62, 90);
-  color: white;
-  border: none;
-  padding: 10px 20px;
-  border-radius: 5px;
+  background: #fff;
+  color: #5b3d8a;
+  border: 1px solid #d4c8f0;
+  padding: 6px 14px;
+  border-radius: 8px;
+  font-size: 0.8rem;
+  font-weight: 600;
   cursor: pointer;
-  transition: background-color 0.3s;
+  transition: background 0.15s;
 }
 
-.cancel-button:hover {
-  background-color: rgb(90, 90, 109); 
-}
+.cancel-button:hover { background: #f3eef8; }
 
 
 
