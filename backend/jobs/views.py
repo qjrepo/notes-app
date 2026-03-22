@@ -6,7 +6,17 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from .models import JobApplication, SyncLog, SheetConfig
 from .serializers import JobApplicationSerializer, JobApplicationStatusSerializer, SheetConfigSerializer
-from .sheets import get_sheet_data, map_row_to_job
+from .sheets import get_sheet_data, map_row_to_job, append_job_to_sheet
+
+def _try_sheet_sync(user, fn, *args):
+    try:
+        config = SheetConfig.objects.get(author=user)
+        fn(config.service_account_json, config.spreadsheet_id, *args)
+    except SheetConfig.DoesNotExist:
+        pass
+    except Exception as e:
+        print(f"[sheets] sync error: {e}")
+
 
 EXTRACT_SYSTEM_PROMPT = (
     "You are a job description parser. Extract information from the job description "
@@ -23,10 +33,11 @@ class JobListCreate(generics.ListCreateAPIView):
     permission_classes = [IsAuthenticated]
 
     def get_queryset(self):
-        return JobApplication.objects.filter(author=self.request.user)
+        return JobApplication.objects.filter(author=self.request.user).order_by("-created_at")
 
     def perform_create(self, serializer):
-        serializer.save(author=self.request.user)
+        job = serializer.save(author=self.request.user)
+        _try_sheet_sync(self.request.user, append_job_to_sheet, job)
 
 
 class JobDelete(generics.DestroyAPIView):
@@ -36,6 +47,9 @@ class JobDelete(generics.DestroyAPIView):
     def get_queryset(self):
         return JobApplication.objects.filter(author=self.request.user)
 
+    def perform_destroy(self, instance):
+        instance.delete()
+
 
 class JobUpdate(generics.UpdateAPIView):
     serializer_class = JobApplicationSerializer
@@ -43,8 +57,6 @@ class JobUpdate(generics.UpdateAPIView):
 
     def get_queryset(self):
         return JobApplication.objects.filter(author=self.request.user)
-
-
 
 class JobStatusUpdate(generics.UpdateAPIView):
     serializer_class = JobApplicationStatusSerializer

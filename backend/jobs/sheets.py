@@ -5,7 +5,9 @@ from googleapiclient.discovery import build
 
 from .models import JobApplication
 
-SCOPES = ["https://www.googleapis.com/auth/spreadsheets.readonly"]
+SCOPES = ["https://www.googleapis.com/auth/spreadsheets"]
+
+SHEET_HEADERS = ["Company", "Title", "Notes: Remote/Hybrid/Salary etc.", "Link", "Status"]
 
 STATUS_MAP = {
     "saved":     JobApplication.Status.SAVED,
@@ -16,13 +18,16 @@ STATUS_MAP = {
 }
 
 
-def get_sheet_data(service_account_json, spreadsheet_id):
+def _build_service(service_account_json):
     credentials_info = json.loads(service_account_json)
     credentials = service_account.Credentials.from_service_account_info(
         credentials_info, scopes=SCOPES
     )
+    return build("sheets", "v4", credentials=credentials)
 
-    service = build("sheets", "v4", credentials=credentials)
+
+def get_sheet_data(service_account_json, spreadsheet_id):
+    service = _build_service(service_account_json)
     result = (
         service.spreadsheets()
         .values()
@@ -59,3 +64,44 @@ def map_row_to_job(row):
         "url":     row.get("Link", "").strip() or None,
         "notes":   row.get("Notes: Remote/Hybrid/Salary etc.", "").strip(),
     }
+
+
+def _job_to_row(job):
+    return [
+        job.company,
+        job.title,
+        job.notes or "",
+        job.url or "",
+        job.status,
+    ]
+
+
+def _ensure_headers(service, spreadsheet_id):
+    result = (
+        service.spreadsheets()
+        .values()
+        .get(spreadsheetId=spreadsheet_id, range="A1:E1")
+        .execute()
+    )
+    if not result.get("values"):
+        service.spreadsheets().values().update(
+            spreadsheetId=spreadsheet_id,
+            range="A1",
+            valueInputOption="RAW",
+            body={"values": [SHEET_HEADERS]},
+        ).execute()
+
+
+
+def append_job_to_sheet(service_account_json, spreadsheet_id, job):
+    service = _build_service(service_account_json)
+    _ensure_headers(service, spreadsheet_id)
+    service.spreadsheets().values().append(
+        spreadsheetId=spreadsheet_id,
+        range="A1",
+        valueInputOption="RAW",
+        insertDataOption="INSERT_ROWS",
+        body={"values": [_job_to_row(job)]},
+    ).execute()
+
+
