@@ -34,7 +34,7 @@ class NoteListCreate(generics.ListCreateAPIView):
 
     def get_queryset(self):
         user = self.request.user
-        return Note.objects.filter(author=user).order_by('-is_pinned', '-created_at')
+        return Note.objects.filter(author=user).order_by('-is_pinned', '-pinned_at', '-created_at')
 
     def perform_create(self, serializer):
         print(type(serializer))
@@ -58,7 +58,14 @@ class NoteUpdate(generics.UpdateAPIView):
         return Note.objects.filter(author = user)
     
     def perform_update(self, serializer):
-        serializer.save(updated_at = timezone.now())
+        is_pinned = serializer.validated_data.get('is_pinned')
+        instance = self.get_object()
+        pinned_at = instance.pinned_at
+        if is_pinned is True and not instance.is_pinned:
+            pinned_at = timezone.now()
+        elif is_pinned is False:
+            pinned_at = None
+        serializer.save(updated_at=timezone.now(), pinned_at=pinned_at)
 
 class UpdatePassword(views.APIView):
     permission_classes = [IsAuthenticated]
