@@ -1,11 +1,21 @@
 import {useState, React} from 'react';
 import "../styles/Note.css";
 
-function Note({note, deleteNote, updateNote}){
+function Note({note, deleteNote, updateNote, pinNote}){
 
     const [isEditing, setIsEditing] = useState(false)
     const [editedTitle, setEditedTitle] = useState(note.title);
     const [editedContent, setEditedContent] = useState(note.content);
+
+    const renderContent = (text) => {
+        const urlRegex = /(https?:\/\/[^\s]+|www\.[^\s]+)/g;
+        const parts = text.split(urlRegex);
+        return parts.map((part, i) =>
+            urlRegex.test(part)
+                ? <a key={i} href={part.startsWith("www.") ? `https://${part}` : part} target="_blank" rel="noopener noreferrer">{part}</a>
+                : part
+        );
+    };
 
     const formattedDate = new Date(note.created_at).toLocaleString("en-US", {
         year: "numeric",
@@ -46,7 +56,7 @@ function Note({note, deleteNote, updateNote}){
         setIsEditing(false)
     }
     return (
-        <div className = "note-container" onDoubleClick = {handleDoubleclick}>
+        <div className={`note-container${note.is_pinned ? " note-pinned" : ""}`} onDoubleClick={handleDoubleclick}>
             {isEditing ? (
                 <form className="note-edit-form" onSubmit={handleUpdate}>
                     <input 
@@ -58,6 +68,7 @@ function Note({note, deleteNote, updateNote}){
                     <textarea
                         type = "text"
                         id = "editedContent"
+                        rows={6}
                         onChange = {(e) => setEditedContent(e.target.value)}
                         value = {editedContent}
                     />
@@ -69,7 +80,7 @@ function Note({note, deleteNote, updateNote}){
             ) : (
                 <article>
                     <h3 className="note-title">{note.title}</h3>
-                    <p className="note-content">{note.content}</p>
+                    <p className="note-content">{renderContent(note.content)}</p>
                     <p className="note-date">
                         Created at:{" "}
                         <time dateTime={note.created_at}>
@@ -87,6 +98,9 @@ function Note({note, deleteNote, updateNote}){
                     )}
 
                     <div className="note-actions">
+                        <button className="pin-button" onClick={() => pinNote(note.id, note.is_pinned)}>
+                            {note.is_pinned ? "Unpin" : "Pin"}
+                        </button>
                         <button className="delete-button" onClick={() => deleteNote(note.id)}>Delete</button>
                     </div>
                 </article>

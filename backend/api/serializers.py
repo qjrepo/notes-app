@@ -38,7 +38,7 @@ class UserSerializer(serializers.ModelSerializer):
 class NoteSerializer(serializers.ModelSerializer):
     class Meta:
         model = Note
-        fields = ["id", "title", "content", "created_at", "updated_at", "author"]
+        fields = ["id", "title", "content", "created_at", "updated_at", "is_pinned", "author"]
         extra_kwargs = {"author":{"read_only": True}}
     
 class ForgotPasswordSerializer(serializers.Serializer):

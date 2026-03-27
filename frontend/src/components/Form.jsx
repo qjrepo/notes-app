@@ -61,6 +61,8 @@ function Form({route, method}){
                     value={username}
                     onChange={(e) => setUsername(e.target.value)}
                     placeholder="Username"
+                    name="username"
+                    autoComplete="username"
                 />
                 <input
                     className="form-input"
@@ -68,6 +70,8 @@ function Form({route, method}){
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                     placeholder="Password"
+                    name="password"
+                    autoComplete="current-password"
                 />
 
                 <button type = "submit" className = "form-button">

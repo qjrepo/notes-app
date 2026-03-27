@@ -73,6 +73,15 @@ function Home(){
         }
     };
 
+    const pinNote = async (id, currentlyPinned) => {
+        try {
+            await api.patch(`/api/notes/update/${id}/`, { is_pinned: !currentlyPinned });
+            getNotes();
+        } catch {
+            toast('Failed to pin note.', 'error');
+        }
+    };
+
     const createNote = (e) => {
         e.preventDefault();
         api.post("/api/notes/", { content, title })
@@ -101,7 +110,7 @@ function Home(){
                     <p className="notes-section-title">My Notes <span className="notes-count">({notes.length})</span></p>
                     {pageNotes.length === 0 && <p className="notes-empty">No notes yet. Create one!</p>}
                     {pageNotes.map(note => (
-                        <Note note={note} deleteNote={deleteNote} updateNote={updateNote} key={note.id} />
+                        <Note note={note} deleteNote={deleteNote} updateNote={updateNote} pinNote={pinNote} key={note.id} />
                     ))}
                     {totalPages > 1 && (
                         <div className="notes-pagination">

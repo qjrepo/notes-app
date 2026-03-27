@@ -115,5 +115,24 @@
 
 .cancel-button:hover { background: #f3eef8; }
 
+.note-pinned {
+  border-color: #7c5cbf;
+  background: #faf8ff;
+}
+
+.pin-button {
+  background: #fff;
+  color: #7c5cbf;
+  border: 1px solid #d4c8f0;
+  padding: 6px 14px;
+  border-radius: 8px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+.pin-button:hover { background: #f3eef8; }
+
 
 

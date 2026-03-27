@@ -34,8 +34,8 @@ class NoteListCreate(generics.ListCreateAPIView):
 
     def get_queryset(self):
         user = self.request.user
-        return Note.objects.filter(author = user)
-    
+        return Note.objects.filter(author=user).order_by('-is_pinned', '-created_at')
+
     def perform_create(self, serializer):
         print(type(serializer))
         print(serializer.validated_data)
