@@ -56,7 +56,8 @@ function Note({note, deleteNote, updateNote, pinNote}){
         setIsEditing(false)
     }
     return (
-        <div className={`note-container${note.is_pinned ? " note-pinned" : ""}`} onDoubleClick={handleDoubleclick}>
+        <div className="note-container" onDoubleClick={handleDoubleclick}>
+            {note.is_pinned && <span className="pin-indicator">📌</span>}
             {isEditing ? (
                 <form className="note-edit-form" onSubmit={handleUpdate}>
                     <input 

@@ -1,4 +1,5 @@
 .note-container {
+  position: relative;
   background: #fff;
   border: 1px solid #ede9f5;
   border-radius: 14px;
@@ -23,7 +24,7 @@
 .note-content {
   font-size: 0.9rem;
   color: #555;
-  line-height: 1.55;
+  line-height: 1.2;
   margin: 0 0 12px;
   white-space: pre-wrap;
 }
@@ -53,6 +54,7 @@
   border-radius: 8px;
   font-size: 0.9rem;
   font-family: inherit;
+  line-height: 1.2;
   box-sizing: border-box;
   outline: none;
   transition: border-color 0.15s;
@@ -115,9 +117,13 @@
 
 .cancel-button:hover { background: #f3eef8; }
 
-.note-pinned {
-  border-color: #7c5cbf;
-  background: #faf8ff;
+.pin-indicator {
+  position: absolute;
+  top: 10px;
+  right: 14px;
+  font-size: 1rem;
+  line-height: 1;
+  pointer-events: none;
 }
 
 .pin-button {
